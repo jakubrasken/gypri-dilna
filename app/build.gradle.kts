@@ -26,11 +26,16 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // Inject Apps Script URL from local.properties (never hardcode this)
+        // Inject URLs from local.properties (never hardcode these)
         buildConfigField(
             "String",
             "APPS_SCRIPT_URL",
             "\"${localProperties.getProperty("APPS_SCRIPT_URL", "")}\""
+        )
+        buildConfigField(
+            "String",
+            "GOOGLE_FORM_URL",
+            "\"${localProperties.getProperty("GOOGLE_FORM_URL", "")}\""
         )
     }
 
@@ -79,16 +84,19 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
 
     // CameraX
-    val cameraXVersion = "1.4.1"
-    implementation("androidx.camera:camera-core:${cameraXVersion}")
-    implementation("androidx.camera:camera-camera2:${cameraXVersion}")
-    implementation("androidx.camera:camera-lifecycle:${cameraXVersion}")
-    implementation("androidx.camera:camera-view:${cameraXVersion}")
+    val cameraxVersion = "1.4.1"
+    implementation("androidx.camera:camera-core:${cameraxVersion}")
+    implementation("androidx.camera:camera-camera2:${cameraxVersion}")
+    implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
+    implementation("androidx.camera:camera-view:${cameraxVersion}")
 
     // ML Kit
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
 
-    // WebView in Compose
+    // Chrome Custom Tabs (To fix Google Login 403 error)
+    implementation("androidx.browser:browser:1.8.0")
+
+    // WebView support
     implementation("androidx.webkit:webkit:1.12.1")
 
     // Retrofit & Gson

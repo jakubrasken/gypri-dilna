@@ -7,9 +7,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    // BASE_URL is injected at build time from local.properties via BuildConfig.
-    // Never hardcode this value here — see local.properties.example for setup instructions.
-    private val BASE_URL = BuildConfig.APPS_SCRIPT_URL
+    // Inject Apps Script URL from BuildConfig (set in local.properties)
+    private val BASE_URL: String by lazy {
+        val url = BuildConfig.APPS_SCRIPT_URL
+        if (url.isNotEmpty() && !url.endsWith("/")) "$url/" else url
+    }
 
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS)
@@ -19,8 +21,11 @@ object RetrofitClient {
         .build()
 
     val apiService: ApiService by lazy {
+        // Provide a dummy base URL if the secret is missing to prevent initialization crash
+        val finalUrl = if (BASE_URL.isEmpty()) "https://placeholder.com/" else BASE_URL
+        
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(finalUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

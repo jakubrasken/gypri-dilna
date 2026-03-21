@@ -1,7 +1,8 @@
 <resources>
-    <!-- Base application theme hardcoded to Dark -->
-    <style name="Theme.Inventarizace" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:forceDarkAllowed">true</item>
+    <!-- Base application theme using a system default to avoid dependency issues -->
+    <style name="Theme.Inventarizace" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/graphite_core</item>
+        <item name="android:statusBarColor">@color/graphite_core</item>
     </style>
 
     <!-- Splash Screen Theme -->
